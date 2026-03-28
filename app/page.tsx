@@ -244,8 +244,8 @@ const slides = [
     id: 5,
     title: { en: "The Bottom Line", es: "En Conclusión" },
     content: {
-      en: "Chill Sandro = Squad.\nToxic Sandro = We Out.\nThe ball is in your court.\n\n— Elia & Jona",
-      es: "Sandro Tranquilo = Escuadrón.\nSandro Tóxico = Nos Vamos.\nLa decisión es tuya.\n\n— Elia y Jona"
+      en: "Chill Sandro = Squad.\nToxic Sandro = We Out.\n— Elia & Jona",
+      es: "Sandro Tranquilo = Escuadrón.\nSandro Tóxico = Nos Vamos.\n— Elia y Jona"
     },
     Visual: ChoiceVisual
   }
