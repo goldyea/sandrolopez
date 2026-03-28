@@ -12,8 +12,12 @@ const SquadVisual = ({ lang }: { lang: 'en'|'es' }) => (
       {['E', 'J', 'P', 'A', 'T'].map((letter, i) => (
         <motion.div 
           initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: i * 0.1 }}
+          animate={{ opacity: 1, x: 0, y: [0, -8, 0] }}
+          transition={{ 
+            opacity: { delay: i * 0.1 },
+            x: { delay: i * 0.1 },
+            y: { duration: 2.5, repeat: Infinity, delay: i * 0.2, ease: "easeInOut" }
+          }}
           key={letter} 
           className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-blue-100/80 backdrop-blur-sm border-2 border-white flex items-center justify-center font-bold text-blue-600 shadow-sm z-10"
         >
@@ -30,12 +34,22 @@ const SquadVisual = ({ lang }: { lang: 'en'|'es' }) => (
     </motion.div>
     <motion.div 
       initial={{ opacity: 0, x: 20 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ delay: 0.7, type: "spring" }}
+      animate={{ opacity: 1, x: 0, rotate: [0, -10, 10, 0] }}
+      transition={{ 
+        opacity: { delay: 0.7 },
+        x: { delay: 0.7, type: "spring" },
+        rotate: { duration: 0.6, repeat: Infinity, repeatDelay: 2, delay: 1.5 }
+      }}
       className="w-12 h-12 md:w-14 md:h-14 rounded-full bg-red-100/80 backdrop-blur-sm border-2 border-white flex items-center justify-center font-bold text-red-600 shadow-md transform scale-110 relative"
     >
       S
-      <span className="absolute -top-2 -right-2 text-lg">🇵🇪</span>
+      <motion.span 
+        animate={{ rotate: [0, 20, -10, 20, 0] }}
+        transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 1 }}
+        className="absolute -top-2 -right-2 text-lg origin-bottom-left"
+      >
+        🇵🇪
+      </motion.span>
     </motion.div>
   </div>
 );
@@ -47,7 +61,9 @@ const ChartVisual = ({ lang }: { lang: 'en'|'es' }) => (
     <motion.div initial={{height: 0}} animate={{height: '70%'}} transition={{delay: 0.2, duration: 0.5}} className="w-full bg-green-300/60 rounded-t-md border-t border-white/50" />
     <motion.div initial={{height: 0}} animate={{height: '40%'}} transition={{delay: 0.3, duration: 0.5}} className="w-full bg-yellow-400/60 rounded-t-md border-t border-white/50" />
     <motion.div initial={{height: 0}} animate={{height: '15%'}} transition={{delay: 0.4, duration: 0.5}} className="w-full bg-red-400/60 rounded-t-md border-t border-white/50 relative">
-      <TrendingDown className="absolute -top-6 left-1/2 -translate-x-1/2 text-red-500 w-4 h-4" />
+      <motion.div animate={{ y: [0, -8, 0] }} transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}>
+        <TrendingDown className="absolute -top-6 left-1/2 -translate-x-1/2 text-red-500 w-4 h-4" />
+      </motion.div>
     </motion.div>
     <div className="absolute -bottom-6 left-0 w-full flex justify-between text-[10px] text-slate-500 font-bold uppercase">
       <span>{lang === 'en' ? 'Start of Year' : 'Inicio de Año'}</span>
@@ -67,10 +83,13 @@ const FlagsVisual = ({ lang }: { lang: 'en'|'es' }) => (
         key={i}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
+        whileHover={{ scale: 1.1, rotate: i % 2 === 0 ? 5 : -5 }}
         transition={{ delay: item.delay }}
-        className="flex flex-col items-center p-3 md:p-4 bg-white/40 rounded-2xl shadow-[4px_4px_10px_rgba(163,177,198,0.3),-4px_-4px_10px_rgba(255,255,255,0.8)] border border-white/60 w-24 md:w-28"
+        className="flex flex-col items-center p-3 md:p-4 bg-white/40 rounded-2xl shadow-[4px_4px_10px_rgba(163,177,198,0.3),-4px_-4px_10px_rgba(255,255,255,0.8)] border border-white/60 w-24 md:w-28 cursor-pointer"
       >
-        <item.icon className="text-red-500 mb-2 w-6 h-6 md:w-8 md:h-8" />
+        <motion.div animate={{ rotate: [0, -5, 5, 0] }} transition={{ duration: 2, repeat: Infinity, delay: item.delay }}>
+          <item.icon className="text-red-500 mb-2 w-6 h-6 md:w-8 md:h-8" />
+        </motion.div>
         <span className="text-[10px] md:text-xs font-bold text-slate-600 text-center leading-tight">{item.label}</span>
       </motion.div>
     ))}
@@ -81,10 +100,21 @@ const UncomfortableVisual = ({ lang }: { lang: 'en'|'es' }) => (
   <div className="flex items-center justify-center my-8 relative">
     <motion.div 
       initial={{ scale: 0.8, opacity: 0 }}
-      animate={{ scale: 1, opacity: 1 }}
+      animate={{ scale: 1, opacity: 1, x: [0, -5, 5, -5, 5, 0] }}
+      transition={{ 
+        scale: { duration: 0.3 },
+        opacity: { duration: 0.3 },
+        x: { duration: 0.5, delay: 1, repeat: Infinity, repeatDelay: 3 }
+      }}
       className="w-24 h-24 bg-slate-200/50 rounded-full flex items-center justify-center border-4 border-white/50 shadow-inner relative overflow-hidden"
     >
-      <span className="text-4xl">😐</span>
+      <motion.span 
+        animate={{ x: [0, -3, 3, 0], y: [0, 2, -2, 0], rotate: [0, -5, 5, 0] }}
+        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+        className="text-4xl inline-block"
+      >
+        😐
+      </motion.span>
       <motion.div 
         initial={{ width: 0 }}
         animate={{ width: '100%' }}
@@ -100,19 +130,21 @@ const ChoiceVisual = ({ lang }: { lang: 'en'|'es' }) => (
     <motion.div 
       initial={{ x: -20, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
+      whileHover={{ scale: 1.05 }}
       transition={{ delay: 0.1 }}
-      className="flex items-center gap-3 p-3 bg-green-100/40 backdrop-blur-sm rounded-2xl border border-green-200/60 shadow-sm"
+      className="flex items-center gap-3 p-3 bg-green-100/40 backdrop-blur-sm rounded-2xl border border-green-200/60 shadow-sm cursor-pointer"
     >
-      <div className="w-8 h-8 rounded-full bg-green-400 flex items-center justify-center text-white font-bold shadow-inner"><Check size={16} /></div>
+      <motion.div animate={{ scale: [1, 1.1, 1] }} transition={{ duration: 2, repeat: Infinity }} className="w-8 h-8 rounded-full bg-green-400 flex items-center justify-center text-white font-bold shadow-inner"><Check size={16} /></motion.div>
       <span className="text-sm font-bold text-green-800">{lang === 'en' ? "Chill Sandro = Squad" : "Sandro Tranquilo = Escuadrón"}</span>
     </motion.div>
     <motion.div 
       initial={{ x: 20, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
+      whileHover={{ scale: 1.05 }}
       transition={{ delay: 0.3 }}
-      className="flex items-center gap-3 p-3 bg-red-100/40 backdrop-blur-sm rounded-2xl border border-red-200/60 shadow-sm"
+      className="flex items-center gap-3 p-3 bg-red-100/40 backdrop-blur-sm rounded-2xl border border-red-200/60 shadow-sm cursor-pointer"
     >
-      <div className="w-8 h-8 rounded-full bg-red-400 flex items-center justify-center text-white font-bold shadow-inner"><X size={16} /></div>
+      <motion.div animate={{ scale: [1, 1.1, 1] }} transition={{ duration: 2, repeat: Infinity, delay: 1 }} className="w-8 h-8 rounded-full bg-red-400 flex items-center justify-center text-white font-bold shadow-inner"><X size={16} /></motion.div>
       <span className="text-sm font-bold text-red-800">{lang === 'en' ? "Toxic Sandro = We Out" : "Sandro Tóxico = Nos Vamos"}</span>
     </motion.div>
   </div>
@@ -171,20 +203,26 @@ const slides = [
 const variants = {
   enter: (direction: number) => ({
     x: direction > 0 ? 100 : -100,
+    y: 20,
+    rotate: direction > 0 ? 5 : -5,
     opacity: 0,
-    scale: 0.95,
+    scale: 0.9,
   }),
   center: {
     zIndex: 1,
     x: 0,
+    y: 0,
+    rotate: 0,
     opacity: 1,
     scale: 1,
   },
   exit: (direction: number) => ({
     zIndex: 0,
     x: direction < 0 ? 100 : -100,
+    y: -20,
+    rotate: direction < 0 ? 5 : -5,
     opacity: 0,
-    scale: 0.95,
+    scale: 0.9,
   }),
 };
 
@@ -209,13 +247,25 @@ const TranslateSlide = ({ title, content, Visual }: { title: {en: string, es: st
         <Visual lang={lang} />
       </div>
       
-      <h2 className="text-2xl md:text-3xl font-extrabold text-slate-800 mb-3 tracking-tight drop-shadow-sm transition-colors duration-300">
+      <motion.h2 
+        key={`h2-${lang}`}
+        initial={{ opacity: 0, y: 10, filter: 'blur(4px)' }}
+        animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+        transition={{ duration: 0.4 }}
+        className="text-2xl md:text-3xl font-extrabold text-slate-800 mb-3 tracking-tight drop-shadow-sm transition-colors duration-300"
+      >
         {lang === 'en' ? title.en : title.es}
-      </h2>
+      </motion.h2>
       
-      <p className="text-base md:text-lg text-slate-600 leading-relaxed font-medium max-w-xl mx-auto whitespace-pre-line transition-colors duration-300">
+      <motion.p 
+        key={`p-${lang}`}
+        initial={{ opacity: 0, y: 10, filter: 'blur(4px)' }}
+        animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+        transition={{ duration: 0.4, delay: 0.1 }}
+        className="text-base md:text-lg text-slate-600 leading-relaxed font-medium max-w-xl mx-auto whitespace-pre-line transition-colors duration-300"
+      >
         {lang === 'en' ? content.en : content.es}
-      </p>
+      </motion.p>
     </div>
   );
 };
@@ -235,9 +285,45 @@ export default function SandroSlideshow() {
   return (
     <div className="min-h-screen bg-[#e0e5ec] flex items-center justify-center p-4 overflow-hidden relative font-sans">
       {/* Decorative background elements for glassmorphism to blur */}
-      <div className="absolute top-[5%] left-[10%] w-[50vw] h-[50vw] max-w-[600px] max-h-[600px] bg-red-400/20 rounded-full mix-blend-multiply filter blur-[100px] animate-pulse" />
-      <div className="absolute bottom-[5%] right-[10%] w-[50vw] h-[50vw] max-w-[600px] max-h-[600px] bg-blue-400/20 rounded-full mix-blend-multiply filter blur-[100px] animate-pulse" style={{ animationDelay: '2s' }} />
-      <div className="absolute top-[30%] left-[30%] w-[40vw] h-[40vw] max-w-[500px] max-h-[500px] bg-white/60 rounded-full mix-blend-overlay filter blur-[80px]" />
+      <motion.div 
+        animate={{ x: [0, 50, -50, 0], y: [0, -50, 50, 0] }}
+        transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+        className="absolute top-[5%] left-[10%] w-[50vw] h-[50vw] max-w-[600px] max-h-[600px] bg-red-400/20 rounded-full mix-blend-multiply filter blur-[100px]" 
+      />
+      <motion.div 
+        animate={{ x: [0, -50, 50, 0], y: [0, 50, -50, 0] }}
+        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+        className="absolute bottom-[5%] right-[10%] w-[50vw] h-[50vw] max-w-[600px] max-h-[600px] bg-blue-400/20 rounded-full mix-blend-multiply filter blur-[100px]" 
+      />
+      <motion.div 
+        animate={{ scale: [1, 1.1, 1] }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute top-[30%] left-[30%] w-[40vw] h-[40vw] max-w-[500px] max-h-[500px] bg-white/60 rounded-full mix-blend-overlay filter blur-[80px]" 
+      />
+
+      {/* Floating Particles */}
+      {[...Array(8)].map((_, i) => (
+        <motion.div
+          key={`particle-${i}`}
+          className="absolute w-2 h-2 md:w-3 md:h-3 bg-white/60 rounded-full"
+          animate={{
+            y: [0, -150],
+            x: [0, (i % 2 === 0 ? 50 : -50)],
+            opacity: [0, 1, 0],
+            scale: [0, Math.random() + 0.5, 0]
+          }}
+          transition={{
+            duration: 4 + Math.random() * 3,
+            repeat: Infinity,
+            delay: Math.random() * 5,
+            ease: "easeInOut"
+          }}
+          style={{
+            left: `${10 + Math.random() * 80}%`,
+            top: `${20 + Math.random() * 80}%`,
+          }}
+        />
+      ))}
 
       {/* Main Glassmorphic Container */}
       <div className="relative w-full max-w-2xl h-[650px] md:h-[600px] bg-white/40 backdrop-blur-2xl border border-white/60 rounded-[3rem] shadow-[0_8px_32px_0_rgba(31,38,135,0.07)] flex flex-col p-4 md:p-8">
@@ -279,19 +365,23 @@ export default function SandroSlideshow() {
         {/* Controls Area */}
         <div className="mt-4 flex items-center justify-between w-full px-4 md:px-8 pb-4">
           {/* Prev Button (Neumorphic) */}
-          <button
+          <motion.button
+            whileHover={{ scale: page === 0 ? 1 : 1.05 }}
+            whileTap={{ scale: page === 0 ? 1 : 0.95 }}
             onClick={() => paginate(-1)}
             disabled={page === 0}
             className="p-4 rounded-2xl bg-[#e0e5ec]/80 backdrop-blur-md text-slate-600 shadow-[4px_4px_10px_rgba(163,177,198,0.4),-4px_-4px_10px_rgba(255,255,255,0.8)] border border-white/50 hover:shadow-[inset_4px_4px_10px_rgba(163,177,198,0.4),inset_-4px_-4px_10px_rgba(255,255,255,0.8)] transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:shadow-[4px_4px_10px_rgba(163,177,198,0.4),-4px_-4px_10px_rgba(255,255,255,0.8)]"
             aria-label="Previous slide"
           >
             <ArrowLeft className="w-5 h-5 md:w-6 md:h-6" />
-          </button>
+          </motion.button>
 
           {/* Dots */}
           <div className="flex gap-2 md:gap-3">
             {slides.map((_, i) => (
-              <button
+              <motion.button
+                whileHover={{ scale: 1.2 }}
+                whileTap={{ scale: 0.9 }}
                 key={i}
                 onClick={() => {
                   setDirection(i > page ? 1 : -1);
@@ -308,14 +398,16 @@ export default function SandroSlideshow() {
           </div>
 
           {/* Next Button (Neumorphic) */}
-          <button
+          <motion.button
+            whileHover={{ scale: page === slides.length - 1 ? 1 : 1.05 }}
+            whileTap={{ scale: page === slides.length - 1 ? 1 : 0.95 }}
             onClick={() => paginate(1)}
             disabled={page === slides.length - 1}
             className="p-4 rounded-2xl bg-[#e0e5ec]/80 backdrop-blur-md text-slate-600 shadow-[4px_4px_10px_rgba(163,177,198,0.4),-4px_-4px_10px_rgba(255,255,255,0.8)] border border-white/50 hover:shadow-[inset_4px_4px_10px_rgba(163,177,198,0.4),inset_-4px_-4px_10px_rgba(255,255,255,0.8)] transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:shadow-[4px_4px_10px_rgba(163,177,198,0.4),-4px_-4px_10px_rgba(255,255,255,0.8)]"
             aria-label="Next slide"
           >
             <ArrowRight className="w-5 h-5 md:w-6 md:h-6" />
-          </button>
+          </motion.button>
         </div>
       </div>
     </div>
