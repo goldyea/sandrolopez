@@ -2,9 +2,51 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { ArrowRight, ArrowLeft, AlertOctagon, MessageCircleWarning, Frown, Users, TrendingDown, Split, Check, X, Languages } from "lucide-react";
+import { ArrowRight, ArrowLeft, AlertOctagon, MessageCircleWarning, Frown, Users, TrendingDown, Split, Check, X, Languages, Presentation, Heart, RefreshCw } from "lucide-react";
 
 // --- Visual Components for each slide ---
+
+const CoverVisual = ({ lang }: { lang: 'en'|'es' }) => (
+  <div className="flex items-center justify-center my-8">
+    <motion.div 
+      animate={{ y: [0, -10, 0] }}
+      transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+      className="w-24 h-24 bg-indigo-100/80 rounded-3xl flex items-center justify-center border-4 border-white/50 shadow-lg rotate-3"
+    >
+      <Presentation className="w-12 h-12 text-indigo-500" />
+    </motion.div>
+  </div>
+);
+
+const ChangeVisual = ({ lang }: { lang: 'en'|'es' }) => (
+  <div className="flex items-center justify-center gap-6 my-8">
+    <motion.div 
+      initial={{ opacity: 0.5, scale: 0.9 }}
+      animate={{ opacity: [0.5, 1, 0.5], scale: [0.9, 1, 0.9] }}
+      transition={{ duration: 3, repeat: Infinity }}
+      className="flex flex-col items-center"
+    >
+      <div className="w-16 h-16 bg-slate-200/80 rounded-full flex items-center justify-center border-2 border-white/50 shadow-inner mb-2">
+        <Frown className="w-8 h-8 text-slate-500" />
+      </div>
+    </motion.div>
+    
+    <motion.div animate={{ rotate: 360 }} transition={{ duration: 4, repeat: Infinity, ease: "linear" }}>
+      <RefreshCw className="w-6 h-6 text-blue-400" />
+    </motion.div>
+
+    <motion.div 
+      initial={{ opacity: 0.8, scale: 1 }}
+      animate={{ opacity: [0.8, 1, 0.8], scale: [1, 1.1, 1] }}
+      transition={{ duration: 2, repeat: Infinity }}
+      className="flex flex-col items-center"
+    >
+      <div className="w-16 h-16 bg-pink-100/80 rounded-full flex items-center justify-center border-2 border-white/50 shadow-lg mb-2">
+        <Heart className="w-8 h-8 text-pink-500 fill-pink-500" />
+      </div>
+    </motion.div>
+  </div>
+);
 
 const SquadVisual = ({ lang }: { lang: 'en'|'es' }) => (
   <div className="flex items-center justify-center gap-2 md:gap-4 my-8">
@@ -155,34 +197,34 @@ const ChoiceVisual = ({ lang }: { lang: 'en'|'es' }) => (
 const slides = [
   {
     id: 0,
-    title: { en: "The Squad", es: "El Escuadrón" },
+    title: { en: "Cover", es: "Portada" },
     content: { 
-      en: "Elia, Thar, Paccar, Anthony, Jona... and then you joined us this year, Sandro. We welcomed you in.", 
-      es: "Elia, Thar, Paccar, Anthony, Jona... y luego te uniste a nosotros este año, Sandro. Te dimos la bienvenida." 
+      en: "A quick presentation about our friendship, the good times, and some things we need to talk about.", 
+      es: "Una presentación rápida sobre nuestra amistad, los buenos momentos y algunas cosas de las que necesitamos hablar." 
+    },
+    Visual: CoverVisual
+  },
+  {
+    id: 1,
+    title: { en: "The Good", es: "Lo Bueno" },
+    content: { 
+      en: "Elia, Thar, Paccar, Anthony, Jona... and then you joined us this year, Sandro. You were super chill and nice.", 
+      es: "Elia, Thar, Paccar, Anthony, Jona... y luego te uniste a nosotros este año, Sandro. Eras súper buena onda." 
     },
     Visual: SquadVisual
   },
   {
-    id: 1,
-    title: { en: "The Drop-off", es: "La Caída" },
-    content: {
-      en: "When you first joined, you were super chill and nice. But lately, the vibes have been dropping fast.",
-      es: "Cuando te uniste, eras súper buena onda. Pero últimamente, la buena vibra ha ido cayendo rápido."
-    },
-    Visual: ChartVisual
-  },
-  {
     id: 2,
-    title: { en: "The Red Flags", es: "Las Banderas Rojas" },
+    title: { en: "The Issues", es: "Los Problemas" },
     content: {
-      en: "The racist jokes, the homophobic comments, the random anger, and the middle fingers when we're just trying to joke around.",
-      es: "Las bromas racistas, los comentarios homofóbicos, el enojo de la nada y los insultos cuando solo intentamos bromear."
+      en: "Lately, the vibes have dropped. The racist jokes, homophobic comments, random anger, and middle fingers when we're just joking around.",
+      es: "Últimamente, la vibra ha caído. Las bromas racistas, comentarios homofóbicos, enojo de la nada y los insultos cuando solo bromeamos."
     },
     Visual: FlagsVisual
   },
   {
     id: 3,
-    title: { en: "It's Not Funny", es: "No Es Gracioso" },
+    title: { en: "How It Feels", es: "Cómo Se Siente" },
     content: {
       en: "We don't think it's funny. It just makes us uncomfortable. We're telling you this because we actually care.",
       es: "No nos parece gracioso. Solo nos hace sentir incómodos. Te decimos esto porque realmente nos importas."
@@ -191,10 +233,19 @@ const slides = [
   },
   {
     id: 4,
-    title: { en: "Your Call", es: "Tu Decisión" },
+    title: { en: "Can People Change?", es: "¿Puede la Gente Cambiar?" },
     content: {
-      en: "We want the old, nice Sandro back. If you can drop the toxic habits, we're good. The ball is in your court.\n\n— Elia & Jona",
-      es: "Queremos de vuelta al Sandro amable de antes. Si puedes dejar esos hábitos tóxicos, todo bien. La decisión es tuya.\n\n— Elia y Jona"
+      en: "We believe you can. We want the old, nice Sandro back. It's up to you to drop the toxic habits.",
+      es: "Creemos que sí puedes. Queremos de vuelta al Sandro amable de antes. Depende de ti dejar esos hábitos tóxicos."
+    },
+    Visual: ChangeVisual
+  },
+  {
+    id: 5,
+    title: { en: "The Bottom Line", es: "En Conclusión" },
+    content: {
+      en: "Chill Sandro = Squad.\nToxic Sandro = We Out.\nThe ball is in your court.\n\n— Elia & Jona",
+      es: "Sandro Tranquilo = Escuadrón.\nSandro Tóxico = Nos Vamos.\nLa decisión es tuya.\n\n— Elia y Jona"
     },
     Visual: ChoiceVisual
   }
