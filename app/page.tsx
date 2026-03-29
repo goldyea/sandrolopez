@@ -208,8 +208,8 @@ const slides = [
     id: 1,
     title: { en: "The Good", es: "Lo Bueno" },
     content: { 
-      en: "Elia, Thar, Paccar, Anthony, Jona... and then you joined us this year, Sandro. You were super chill and nice.", 
-      es: "Elia, Thar, Paccar, Anthony, Jona... y luego te uniste a nosotros este año, Sandro. Eras súper buena onda." 
+      en: "Elia, Thar, Paccar, Anthony, Jona, Thar... and then you joined us this year, Sandro. You were super chill and nice.", 
+      es: "Elia, Thar, Paccar, Anthony, Jona, Thar... y luego te uniste a nosotros este año, Sandro. Eras súper buena onda." 
     },
     Visual: SquadVisual
   },
